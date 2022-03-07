@@ -21,10 +21,10 @@ resource "aws_lambda_function" "bitcoin_lambda" {
   filename         = var.lambda_file_name
   function_name    = var.lambda_function_name
   role             = aws_iam_role.lambda_role.arn
-  runtime          = "python3.8"
+  runtime          = "python3.9"
   handler          = "main.lambda_handler"
   source_code_hash = filebase64sha256(var.lambda_file_name)
-  depends_on = [aws_iam_role.lambda_role]
+  depends_on       = [aws_iam_role.lambda_role]
 }
 
 resource "aws_cloudwatch_log_group" "bitcoin_log_group" {
@@ -32,18 +32,15 @@ resource "aws_cloudwatch_log_group" "bitcoin_log_group" {
   retention_in_days = 30
 }
 
-resource "aws_cloudwatch_event_rule" "bitcoin_event_rule" {
-  name                = "bitcoin_event_rule"
-  description         = "bitcoin_event_rule"
-  schedule_expression = "rate(1 hour)"
-}
+
 module "lambda-cloudwatch-events-trigger" {
-  source                = "infrablocks/lambda-cloudwatch-events-trigger/aws"
-  depends_on            = [aws_iam_role.lambda_role, aws_lambda_function.bitcoin_lambda, aws_cloudwatch_log_group.bitcoin_log_group, aws_cloudwatch_event_rule.bitcoin_event_rule]
-  version               = "1.1.0-rc.1"
-  component             = "bitcoin_lambda"
-  deployment_identifier = "production"
-  lambda_arn            = aws_iam_role.lambda_role.arn
-  lambda_function_name  = aws_lambda_function.bitcoin_lambda.function_name
-  region                = "us-east-1"
+  source                     = "infrablocks/lambda-cloudwatch-events-trigger/aws"
+  depends_on                 = [aws_iam_role.lambda_role, aws_lambda_function.bitcoin_lambda, aws_cloudwatch_log_group.bitcoin_log_group, aws_cloudwatch_event_rule.bitcoin_event_rule]
+  version                    = "1.1.0-rc.1"
+  component                  = "bitcoin_lambda"
+  deployment_identifier      = "production"
+  lambda_arn                 = aws_iam_role.lambda_role.arn
+  lambda_function_name       = aws_lambda_function.bitcoin_lambda.function_name
+  region                     = "us-east-1"
+  lambda_schedule_expression = "rate(1 hour)"
 }
