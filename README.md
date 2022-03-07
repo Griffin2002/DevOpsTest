@@ -14,3 +14,12 @@
 5. Limit the data storage to the last 30 days
 6. Create a GitHubAction to deploy the Terraform
 
+## Notes
+1. There is currently no VPC information/access key for terraform to use to deploy the resources. (this is intentional, in order to prevent resources from being deployed to my private aws account as part of the exercise)
+2. My familiarity with Lambda functions and CloudWatch Log Insights is limited. Normally, I would be reaching out to another senior engineer to help me with this; however, that is out of scope for this exercise.
+3. I chose Python to generate the Lambda function because it is the most popular language for Lambda functions. And it is simple to implement.
+4. I chose to use that specific endpoint for the Lambda function because it is the most popular endpoint for Bitcoin prices. And was the first one I found.
+5. I would not expect this code to be found in production, since it has not been peer reviewed.
+6. I also expect there to be errors in the code, due to my inexperience with Lambda functions and CloudWatch Log Insights.
+7. Total time spent on this exercise: 6-8 hours (research, implementation, documentation, etc.)
+

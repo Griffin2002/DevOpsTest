@@ -8,7 +8,7 @@ resource "aws_iam_role" "lambda_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = "lambda.amazonaws.com"
         }
       },
     ]
@@ -37,7 +37,7 @@ module "lambda-cloudwatch-events-trigger" {
   source                     = "infrablocks/lambda-cloudwatch-events-trigger/aws"
   depends_on                 = [aws_iam_role.lambda_role, aws_lambda_function.bitcoin_lambda, aws_cloudwatch_log_group.bitcoin_log_group, aws_cloudwatch_event_rule.bitcoin_event_rule]
   version                    = "1.1.0-rc.1"
-  component                  = "bitcoin_lambda"
+  component                  = var.lambda_function_name
   deployment_identifier      = "production"
   lambda_arn                 = aws_iam_role.lambda_role.arn
   lambda_function_name       = aws_lambda_function.bitcoin_lambda.function_name

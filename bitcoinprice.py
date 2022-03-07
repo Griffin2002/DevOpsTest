@@ -7,12 +7,13 @@ def get_btc_price():
     response = requests.get(url)
     response_json = response.json()
     btc_price = response_json['bpi']['USD']['rate']
-    return {
-        'ticker': 'BTC',
-        'current_price': btc_price,
-        'timestamp': '{:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
-    }
+    return btc_price
 
 
 def lambda_handler(event, context):
-    return get_btc_price()
+    return json.JSONEncoder().encode({
+        'ticker': 'BTC',
+        'price': get_btc_price(),
+        'timestamp': datetime.datetime.now().isoformat()
+    })
+    
