@@ -1,4 +1,4 @@
-# Nacelle Devops Challenge v2
+# Devops Challenge v2
 ## Requirements
  1. Create a Lambda function that hits a public API to get BTC prices and writes the data to stdout.
  2. Create a CloudWatch Log Group and a CloudWatch Event Trigger to run every hour for the current price of Bitcoin.
@@ -22,4 +22,3 @@
 5. I would not expect this code to be found in production, since it has not been peer reviewed.
 6. I also expect there to be errors in the code, due to my inexperience with Lambda functions and CloudWatch Log Insights.
 7. Total time spent on this exercise: 6-8 hours (research, implementation, documentation, etc.)
-
